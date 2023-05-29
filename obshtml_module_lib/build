@@ -1,0 +1,3 @@
+#!/bin/bash
+cargo build --release
+cp ./target/release/hello ./obsidianhtml_rust_module_example/src/hello

@@ -1,0 +1,16 @@
+[package]
+name = "obshtml_module_example"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+json = "*"
+yaml-rust = "0.4"
+regex = "1"
+lazy_static = "1.4.0"
+linked-hash-map = "0.5.6"
+
+[dependencies.obshtml_module_lib]
+path = "../../obshtml_module_lib"
