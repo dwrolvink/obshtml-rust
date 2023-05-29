@@ -1,38 +1,9 @@
-# Introduction
-This is an example module using the https://github.com/dwrolvink/obshtml-rust-module-lib crate to create a custom ObsidianHtml module with Rust.
+This module reads index/files.json to get a list of all vault files.
 
-# Compiling
-Before you can run this example, you will need to compile the rust code.
+It then reads the files ending in `.md`, and collects the frontmatter yaml and the inline tags.
+These two streams are combined into a `metadata` hashtable, and a new hashtable is created that maps
+each file's relative path to the metadata hashtable of that file.
 
-To compile the code, first install rust along with cargo:
-- https://www.rust-lang.org/tools/install
+This hashtable is written to `<module_data_folder>/index/metadata.json`.
 
-Then, run:
-``` bash
-cargo build --release
-```
-
-This will compile `./target/release/obshtml-example` (or `./target/release/obshtml-example.exe`, if you are on Windows).
-
-> Note: this crate is not tested on Windows, nor will it be, and it (will) make extensive use of Posix paths. It will probably not work as is on Windows.
-
-# Use with ObsidianHtml
-> SECTION OUT OF DATE.
-> At time of writing, the python (shim) code described below in this section is not updated. The current goal is to make the shim code superfluous by having ObsidianHtml call the executable directly. Work in progress.
-
-The `target` folder is gitignored by default, and it's easiest to keep it like this.
-
-To make the compiled binary persist, copy it to `obsidianhtml_rust_module_example/src/obshtml-example`.
-
-The python code will execute the binary from that location, so if you skip this step, you will not effectively update the binary after making changes!
-
-On linux you can run `./build`, it combines the two steps above.
-
-## Running
-To test your module, you can run:
-``` bash
-python test.py
-```
-
-This will import and instantiate the `ObsidianHtmlRustExampleModule` and run its `run()` method the same way that ObsidianHtml will.
-Make sure that the dummy path used in the run method (see `obsidianhtml_rust_module_example/module.py`) is a valid path for your system.
+This metadata.json can then be used by other modules to filter out files from the `index/files.json` file based on metadata present in each file.
