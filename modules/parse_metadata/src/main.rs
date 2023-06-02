@@ -16,11 +16,10 @@ use yaml_rust::Yaml;
 // obshtml elements
 use obshtml_module_lib::{ObsidianModuleConfig, ObsidianModule};
 use obshtml_module_lib::module::options::{compile_default_options}; //get_configured_options
-use obshtml_module_lib::module::modfile::{compile_provides};
 use obshtml_module_lib::cli::execute;
 
 // helper functions/objects
-// use obshtml_module_lib::stdlib::*;
+use obshtml_module_lib::stdlib::*;
 use obshtml_module_lib::lib::file;
 use obshtml_module_lib::lib::misc::{yaml_to_json};
 use obshtml_module_lib::markdown::misc::strip_code_sections;
@@ -42,7 +41,9 @@ fn main() {
     let default_options = compile_default_options("test: set this value to test options being set");
 
     // list files that this module will create/alter
-    let provides = compile_provides(vec!("index/metadata.json"));
+    let provides = to_vec_string(vec!("index/metadata.json"));
+    let requires = to_vec_string(vec!("paths.json", "index/files.json"));
+    let alters = to_vec_string(vec!());
 
     // TODO: add requires!
 
@@ -54,10 +55,21 @@ fn main() {
         accept_fn: accept,
         default_options: default_options,
         provides: provides,
+        requires: requires,
+        alters: alters,
     };
 
     execute::start(obs_cfg);
 }
+
+// fn provides(_obsmod: ObsidianModule) {
+//     /*
+//         This function is called by ObsidianHtml to test if we need to run the module proper
+//         In our current case, we always want to run this module when configured
+//     */
+//     let output = r#"{"result": true}"#;
+//     println!("{}", output);
+// }
 
 fn run(obsmod: ObsidianModule) {
     /*

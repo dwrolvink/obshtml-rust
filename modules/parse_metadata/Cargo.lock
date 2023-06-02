@@ -36,7 +36,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
-name = "obshtml-module-parse-metadata"
+name = "obshtml_module_lib"
+version = "0.1.5"
+dependencies = [
+ "json",
+ "lazy_static",
+ "regex",
+ "thiserror",
+ "yaml-rust",
+]
+
+[[package]]
+name = "obshtml_module_parse_metadata"
 version = "0.1.0"
 dependencies = [
  "json",
@@ -44,17 +55,6 @@ dependencies = [
  "linked-hash-map",
  "obshtml_module_lib",
  "regex",
- "yaml-rust",
-]
-
-[[package]]
-name = "obshtml_module_lib"
-version = "0.1.4"
-dependencies = [
- "json",
- "lazy_static",
- "regex",
- "thiserror",
  "yaml-rust",
 ]
 

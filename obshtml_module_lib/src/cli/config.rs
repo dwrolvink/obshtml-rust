@@ -7,6 +7,9 @@ use crate::lib::misc::{expect_at_least_n_args};
 pub enum Config {
     RunConfig(RunConfig),
     AcceptConfig(AcceptConfig),
+    ProvidesConfig(MinimalConfig),
+    RequiresConfig(MinimalConfig),
+    AltersConfig(MinimalConfig),
 }
 impl Config {
     pub fn new() -> Config {
@@ -22,11 +25,14 @@ impl Config {
         return match command.as_str() {
             "run" => Config::RunConfig(RunConfig::new(&args)),
             "accept" => Config::AcceptConfig(AcceptConfig::new(&args)),
+            "provides" => Config::ProvidesConfig(MinimalConfig::new(&args)),
+            "requires" => Config::RequiresConfig(MinimalConfig::new(&args)),
+            "alters" => Config::AltersConfig(MinimalConfig::new(&args)),
             _ => panic!("{}",
                     format_error(
                         "Invalid arguments", 
                         format!("Command {} not valid.", command.as_str()).as_str(),
-                        "Available commands: <run, accept>"
+                        "Available commands: <run, accept, provides, requires, alters>"
                     )
                 )
         };
@@ -84,6 +90,18 @@ impl AcceptConfig {
         return AcceptConfig{
             command: command, 
             module_data_folder: mdf
+        };
+    }
+}
+
+// This config only requires a command, this is per spec the bare minimum
+pub struct MinimalConfig{
+    pub command: String,
+}
+impl MinimalConfig {
+    pub fn new(args: &Vec<String>) -> MinimalConfig {
+        return MinimalConfig{
+            command: args[1].clone(), 
         };
     }
 }

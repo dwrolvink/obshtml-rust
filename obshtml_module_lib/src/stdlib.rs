@@ -35,3 +35,7 @@ pub fn format_error(etype: &str, descriptor: &str, msg: &str) -> String {
     return output;
 }
 
+// for ease of defining Vec<String>s
+pub fn to_vec_string(input: Vec<&str>) -> Vec<String> {
+    return input.iter().map(|s| s.to_string()).collect();
+}

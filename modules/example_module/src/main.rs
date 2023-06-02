@@ -12,7 +12,6 @@ use json::object;
 
 use obshtml_module_lib::{ObsidianModuleConfig, ObsidianModule};
 use obshtml_module_lib::module::options::{compile_default_options}; //get_configured_options
-use obshtml_module_lib::module::modfile::{compile_provides};
 use obshtml_module_lib::cli::execute;
 
 use obshtml_module_lib::stdlib::*;
@@ -28,8 +27,11 @@ b: old (should be overwritten)
 c: old (only in default)
         ");
 
-    // list files that this module will create/alter
-    let provides = compile_provides(vec!("test.json"));
+    // list files that this module will create/read/alter
+    // you can get these via the commandline by running `<your binary name> provides` (etc)
+    let provides = to_vec_string(vec!("test.json"));
+    let requires = to_vec_string(vec!());
+    let alters   = to_vec_string(vec!());
 
     // define module config
     let obs_cfg = ObsidianModuleConfig {
@@ -39,6 +41,8 @@ c: old (only in default)
         accept_fn: accept,
         default_options: default_options,
         provides: provides,
+        requires: requires,
+        alters: alters,
     };
 
     execute::start(obs_cfg);

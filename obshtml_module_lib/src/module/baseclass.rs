@@ -80,6 +80,8 @@ pub struct ObsidianModuleConfig<'a> {
     pub run_fn: fn(ObsidianModule),
     pub accept_fn: fn(ObsidianModule),
     pub provides: Vec<String>,
+    pub requires: Vec<String>,
+    pub alters: Vec<String>,
 }
 
 // METHODS

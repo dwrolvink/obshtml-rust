@@ -41,7 +41,3 @@ impl Modfile  {
         file::write(&abs_file_path, contents)
     }
 }
-
-pub fn compile_provides(input: Vec<&str>) -> Vec<String> {
-    return input.iter().map(|s| s.to_string()).collect();
-}
