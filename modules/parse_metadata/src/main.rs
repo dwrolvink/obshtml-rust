@@ -44,9 +44,7 @@ fn main() {
     let provides = to_vec_string(vec!("index/metadata.json"));
     let requires = to_vec_string(vec!("paths.json", "index/files.json"));
     let alters = to_vec_string(vec!());
-
-    // TODO: add requires!
-
+    
     // define module config
     let obs_cfg = ObsidianModuleConfig {
         module_name: "hello",

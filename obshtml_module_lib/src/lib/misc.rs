@@ -2,6 +2,45 @@ use crate::stdlib::*;
 use json;
 use yaml_rust::Yaml;
 
+use chrono::prelude::{DateTime, Local};
+
+pub struct DateTimeParts {
+    pub date: String,
+    pub time: String,
+    pub timezone: String,
+}
+
+pub fn get_datetime() -> DateTimeParts {
+    // get current datetime
+    let local: DateTime<Local> = Local::now(); 
+
+    // split on whitespace
+    let local = local.to_string();
+    let mut datetime_clean = local.split_whitespace();
+    
+    // extract fields
+    let date = datetime_clean.next().unwrap();
+    let time = datetime_clean.next().unwrap();
+
+    // not sure if timezone is always present, wrap this
+    let timezone = match datetime_clean.next() {
+        Some(tz) => tz,
+        _ => "",
+    };
+
+    return DateTimeParts{
+        date: date.to_owned(),
+        time: time.to_owned(),
+        timezone: timezone.to_owned(),
+    }
+}
+
+impl DateTimeParts {
+    pub fn to_iso_string(&self) -> String {
+        format!("{}T{}", self.date, self.time).to_owned()
+    }
+}
+
 pub fn expect_at_least_n_args(args: &Vec<String>, n: usize, error_text: &str) {
     // number of args expected minus 1 (the command, arg[0])
     if args.len() < n + 1 {

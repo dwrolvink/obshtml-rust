@@ -28,7 +28,8 @@ pub fn start(obs_cfg: ObsidianModuleConfig){
 
 pub fn execute_run(cli_cfg: RunConfig, obs_cfg: ObsidianModuleConfig) -> Result<String, Error> {
     let mdf = cli_cfg.module_data_folder;
-    let obsmod = ObsidianModule::new(obs_cfg, mdf);
+    let instance_id = cli_cfg.instance_id;
+    let obsmod = ObsidianModule::new(obs_cfg, mdf, instance_id);
 
     (obsmod.run_fn)(obsmod);
 
@@ -36,7 +37,8 @@ pub fn execute_run(cli_cfg: RunConfig, obs_cfg: ObsidianModuleConfig) -> Result<
 }
 pub fn execute_accept(cli_cfg: AcceptConfig, obs_cfg: ObsidianModuleConfig) -> Result<String, Error> {
     let mdf = cli_cfg.module_data_folder;
-    let obsmod = ObsidianModule::new(obs_cfg, mdf);
+    let instance_id = cli_cfg.instance_id;
+    let obsmod = ObsidianModule::new(obs_cfg, mdf, instance_id);
 
     (obsmod.accept_fn)(obsmod);
     

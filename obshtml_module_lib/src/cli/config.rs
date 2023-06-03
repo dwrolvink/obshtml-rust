@@ -42,6 +42,7 @@ impl Config {
 pub struct RunConfig {
     pub command: String,
     pub module_data_folder: AbsolutePosixPath,
+    pub instance_id: Option<String>,
 }
 impl RunConfig {
     pub fn new(args: &Vec<String>) -> RunConfig {
@@ -58,10 +59,16 @@ impl RunConfig {
                 panic!("Casting module_data_folder commandline input to AbsolutePosixPath failed: \"{}\"", err);
             }
         };
+        let mut instance_id = None;
+        if args.len() > 3 {
+            instance_id = Some(args[3].clone());
+        };
+
         // create
         return RunConfig{
             command: command, 
-            module_data_folder: mdf
+            module_data_folder: mdf,
+            instance_id: instance_id,
         };
     }
 }
@@ -70,6 +77,7 @@ impl RunConfig {
 pub struct AcceptConfig{
     pub command: String,
     pub module_data_folder: AbsolutePosixPath,
+    pub instance_id: Option<String>,
 }
 impl AcceptConfig {
     pub fn new(args: &Vec<String>) -> AcceptConfig {
@@ -86,10 +94,16 @@ impl AcceptConfig {
                 panic!("Casting module_data_folder commandline input to AbsolutePosixPath failed: \"{}\"", err);
             }
         };
+        let mut instance_id = None;
+        if args.len() > 3 {
+            instance_id = Some(args[3].clone());
+        };
+
         // create
         return AcceptConfig{
             command: command, 
-            module_data_folder: mdf
+            module_data_folder: mdf,
+            instance_id: instance_id,
         };
     }
 }

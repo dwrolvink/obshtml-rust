@@ -14,7 +14,6 @@ use super::options;
     How will we call the rust module?
 
     obshtml: do you want to run? rust_module.accept(module_data_folder) -> json(bool)
-
 */
 
 // DATACLASS
@@ -31,7 +30,9 @@ pub struct ObsidianModule {
     pub run_fn: fn(ObsidianModule),
     pub accept_fn: fn(ObsidianModule),
     pub provides: Vec<String>,
+    pub requires: Vec<String>,
     pub verbosity: ConfiguredVerbosity,
+    pub instance_id: Option<String>,
 }
 impl Default for ObsidianModule {
     fn default() -> ObsidianModule {
@@ -47,9 +48,11 @@ impl Default for ObsidianModule {
             run_fn: placeholder_run_fn,
             accept_fn: placeholder_accept_fn,
             provides: Vec::new(),
+            requires: Vec::new(),
             states: ObsidianModuleStates{
                 _cancelled_run: false
-            }
+            },
+            instance_id: None,
         }
     }
 }
@@ -89,15 +92,17 @@ pub struct ObsidianModuleConfig<'a> {
 impl ObsidianModule {
 
     // recommended way to instantiate a new ObsidianModule struct
-    pub fn new(config: ObsidianModuleConfig, mdf: AbsolutePosixPath) -> ObsidianModule {
+    pub fn new(config: ObsidianModuleConfig, mdf: AbsolutePosixPath, instance_id: Option<String>) -> ObsidianModule {
         let mut obsmod = ObsidianModule {
             module_name: config.module_name.to_string(),
             module_class_name: config.module_class_name.to_string(),
             module_data_folder: mdf,
+            instance_id: instance_id,
             default_options: config.default_options.clone(),
             run_fn: config.run_fn,
             accept_fn: config.accept_fn,
             provides: config.provides,
+            requires: config.requires,
             ..Default::default()
         };
 

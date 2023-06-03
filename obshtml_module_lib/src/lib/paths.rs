@@ -11,7 +11,9 @@ use crate::lib::errors::{Error};
 
 */
 
+#[derive(Clone, Debug, PartialEq)]
 pub struct RelativePosixPath(pub String);
+
 impl RelativePosixPath {
     pub fn new(path: String) -> RelativePosixPath {
         // tests here:
